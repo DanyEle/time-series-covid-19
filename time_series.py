@@ -4,6 +4,7 @@ Daniele Gadler
 Coronavirus time series prediction
 based on ARIMA model
 Updated to 15.03.2020
+https://www.youtube.com/watch?v=e8Yw4alG16Q
 """
 
 import json
