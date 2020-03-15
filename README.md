@@ -5,6 +5,6 @@ https://raw.githubusercontent.com/pcm-dpc/COVID-19/master/dati-json/dpc-covid19-
 
 ## Total cases in Italy - ARIMA model:
 
-[!Covid-19 Totale Casi](./covid_totale_casi.png)
+![Covid-19 Totale Casi](./covid_totale_casi.png)
 
 
