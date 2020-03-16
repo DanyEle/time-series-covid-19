@@ -7,6 +7,7 @@ Updated to 15.03.2020
 https://www.youtube.com/watch?v=e8Yw4alG16Q
 """
 
+import urllib.request, json 
 import json
 import numpy as np
 import matplotlib.pyplot as plt
@@ -14,19 +15,18 @@ from statsmodels.tsa.arima_model import ARIMA
 from statsmodels.tsa.stattools import adfuller
 import pandas as pd
 from pylab import rcParams
-rcParams['figure.figsize'] = 10, 10
+rcParams['figure.figsize'] = 8, 6
 
-FILE_PATH="dpc-covid19-ita-andamento-nazionale.json"
+#Let's read the JSON from the online repo so that we always get the latest version of the data
+with urllib.request.urlopen("https://raw.githubusercontent.com/pcm-dpc/COVID-19/master/dati-json/dpc-covid19-ita-andamento-nazionale.json") as url:
+    json_data = json.loads(url.read().decode())
 
 
-with open(FILE_PATH, 'r') as f:
-    json_virus = json.load(f)
-    
 #Let's get all the dates in each dictionary
-list_dates = [dict_date["data"] for dict_date in json_virus]
+list_dates = [dict_date["data"] for dict_date in json_data]
 
 #Let's get all the 'totale casi' in each dictionary
-list_totale_casi = [dict_date["totale_casi"] for dict_date in json_virus]
+list_totale_casi = [dict_date["totale_casi"] for dict_date in json_data]
 
 #Let's compute a diff 
 
@@ -48,32 +48,25 @@ plt.xticks(rotation=90)
 print(list_dates)
 print(list_totale_casi)
 
-#Rolling statistics, the time window is 1, since there is no "cyclic behaviour here"
-df_totale_casi = pd.DataFrame({"totale_casi" : list_totale_casi})
-df_totale_casi.index=list_dates
-df_totale_casi.index = pd.DatetimeIndex(df_totale_casi.index).to_period('D')
+#Input: - list_data: a list of floating-point numbers or integers that we want to analyse
+#       - list_dates: a list of strings that we want to use as daily dates
+#       - days_prediction(int), the number of upcoming days for which we want to draw predictions
+#Output: - fig, a figure plotting the past data and forecasted data
+def arima_predict(list_data, list_dates, days_prediction):
+    df_data_frame = pd.DataFrame({"data" : list_data})
+    df_data_frame.index=list_dates
+    df_data_frame.index = pd.DatetimeIndex(df_data_frame.index).to_period('D')
+
+    #ARIMA model forforecasting upcoming values
+    model = ARIMA(df_data_frame, order=(2, 1, 0))
+    results_ARIMA = model.fit(disp=-1)
     
-rolling_mean = df_totale_casi["totale_casi"].rolling(window=3).mean()
+    fig = results_ARIMA.plot_predict(1, days_prediction)
+    fig.suptitle("Numero totale casi di Covid-19 in Italia")
+    
+    
+arima_predict(list_totale_casi, list_dates, 100)
 
-plt.xticks(rotation=90)
-#Let's plot the trend every 3 days
-plt.plot(list_dates, rolling_mean, list_totale_casi)
-
-#Let's perform a test for stationarity with Dicker-Fuller
-df_test = adfuller(df_totale_casi["totale_casi"], autolag="AIC")
-
-df_output = pd.Series(df_test[0:4], index=["Test statistic", "p-value", "#Lags used", "Num. of obs used"])
-
-#Cannot reject the null hypothesis, the data is NOT stationary!
-print(df_output)
-
-#ARIMA model forforecasting upcoming values
-#Parameters for order: p-value, differentiating, Q-value
-model = ARIMA(df_totale_casi, order=(2, 1, 0))
-results_ARIMA = model.fit(disp=-1)
-
-fig = results_ARIMA.plot_predict(1, 30)
-fig.suptitle("Numero totale casi di Covid-19 in Italia")
 
    
 
