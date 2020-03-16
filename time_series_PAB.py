@@ -58,9 +58,6 @@ def arima_predict(list_data, list_dates, days_prediction, plot_title):
     fig.suptitle(plot_title)
 
 
-arima_predict(list_totale_casi, list_dates, 50, "Numero totale casi di Covid-19 in PAB")
-arima_predict(list_diff_casi, list_dates, 100, "Nuovi casi di Covid-19 in Italia")
-arima_predict(list_ricoverati_sintomi, list_dates, 50, "Numero di ricoverati con sintomi in Italia")
-arima_predict(list_ratio_deceduti_guariti, list_dates, 30, "Ratio guariti/deceduti in Italia")
+arima_predict(list_totale_casi, list_dates, 50, "Numero totale casi di Covid-19 nella Provincia Autonoma di Bolzano")
 
 
