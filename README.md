@@ -7,4 +7,11 @@ https://raw.githubusercontent.com/pcm-dpc/COVID-19/master/dati-json/dpc-covid19-
 
 ![Covid-19 Totale Casi](./covid_totale_casi.png)
 
+## Total cases in PAB - ARIMA model:
+
+![Covid-19 Totale Casi](./covid_totale_casi_PAB.png)
+
+
+
+
 

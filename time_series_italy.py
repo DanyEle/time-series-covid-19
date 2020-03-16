@@ -75,10 +75,3 @@ arima_predict(list_ricoverati_sintomi, list_dates, 50, "Numero di ricoverati con
 arima_predict(list_ratio_deceduti_guariti, list_dates, 30, "Ratio guariti/deceduti in Italia")
 
 
-   
-
-
-
-
-
-
