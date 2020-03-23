@@ -1,6 +1,4 @@
-﻿;Isolamento/Qarantena al 18-03-2020;
-;;
-Cod Istat;Comune di residenza;Numero casi al 18-03-2020
+﻿Cod Istat;Comune di residenza;Numero casi al 18-03-2020
 21117;La Valle;1
 21116;Feldthurns;6
 21115;Vipiteno;20
@@ -82,5 +80,3 @@ Cod Istat;Comune di residenza;Numero casi al 18-03-2020
 21006;Abtei;3
 21004;Eppan;80
 21001;Aldino;6
-;Fuori provincia;166
-Totale complessivo;;1499
