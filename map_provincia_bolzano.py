@@ -102,9 +102,8 @@ df_out_ready = df_out_no_na.drop(columns=["Numero casi al 16-03-2020","Numero ca
                                           "Numero casi al 19-03-2020", "Numero casi al 20-03-2020",
                                           "Numero casi al 21-03-2020","Numero casi al 22-03-2020" ])
     
-df_out_ready.to_csv("PAB_time_series_16_22_03_2020.csv", index=False)
-
-
-
-
-
+#Re-order columns
+    
+df_out_ready["Comune ITA-DE"] = df_out_ready["Comune di residenza"] + "/" + df_out_ready["Wohngemeinde"] 
+    
+df_out_ready.to_excel("PAB_points_comuni_alto_adige_16_22_03_2020.xlsx", index=False)
